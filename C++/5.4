@@ -1,0 +1,16 @@
+#include <iostream>
+#include<iomanip>
+using namespace std;
+
+int main() {
+	double kilometers;
+
+	cout << "Miles\t" << "Kilometers\n";
+
+	for (int miles = 1; miles <= 10; miles++) {
+		kilometers = miles * 1.609;
+		cout << miles << "\t" << fixed << setprecision(3) << kilometers << "\n";
+	}
+
+	return 0;
+}
