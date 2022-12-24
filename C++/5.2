@@ -1,0 +1,48 @@
+#include <iostream>
+#include<ctime>
+#include<cstdlib>
+using namespace std;
+
+int main() {
+	int correctCount = 0;
+	int count = 0;
+	int temp, answer;
+	long startTime = time(0);
+	long endTime;
+	long testTime;
+	const int NUMBER_OF_QUESTION = 10;
+
+	srand(time(0));
+
+	while (count < NUMBER_OF_QUESTION) {
+		int number1 = 1 + rand() % 15;
+		int number2 = 1 + rand() % 15;
+
+		if (number1 < number2) {
+			temp = number1;
+			number1 = number2;
+			number2 = temp;
+		}
+		cout << "What is " << number1 << " - " << number2 << "? ";
+		cin >> answer;
+
+		if (number1 - number2 == answer) {
+			cout << "You are correct!\n";
+			correctCount++;
+		}
+		else
+			cout << "Your answer is wrong.\n" << number1 << " - " << number2 << " should be " << (number1 - number2) << endl;
+
+		count++;
+
+		cout << endl;
+	}
+
+	endTime = time(0);
+	testTime = endTime - startTime;
+
+	cout << "Correct count is " << correctCount << "\nTest time is " << testTime << " seconds\n";
+	
+
+	return 0;
+}
