@@ -1,0 +1,16 @@
+#include <iostream>
+#include<iomanip>
+using namespace std;
+
+int main() {
+	double pounds;
+
+	cout << "Kilograms\t" << "Pounds\n";
+
+	for (int kilograms = 1; kilograms < 200; kilograms++) {
+		pounds = kilograms * 2.2;
+		cout << kilograms << "\t" << "\t" << fixed << setprecision(1) << pounds << "\n";
+	}
+
+	return 0;
+}
