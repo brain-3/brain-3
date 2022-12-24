@@ -1,0 +1,46 @@
+// pattern A
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    for (int i = 1; i <= 6; i++) {
+        for (int j = 1; j <= i; j++) {
+            cout << j << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+//pattern B
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    for (int i = 6; i > 0; i--) {
+        for (int j = 1; j <= i; j++) {
+            cout << j << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
+//pattern C
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    for (int i = 1; i <= 6; i++) {
+        for (int j = i; j > 0; j--) {
+            cout << j << " ";
+        }
+        cout << endl;
+   }
+    return 0;
+}
+
+//pattern D
