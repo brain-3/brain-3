@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	double score, temp;
+	double best = -1;
+	double second = -2;
+	int loop;
+	string name, best_name, sec_name, temp_name;
+
+	cout << "Enter students number: ";
+	cin >> loop;
+	
+
+	for (int i = 0; i < loop; i++) {
+		cout << "Enter student's name: ";
+		cin >> name;
+		cout << "Enter the score: ";
+		cin >> score;
+		cout << endl;
+
+		if (best < score) {
+			temp = best;
+			best = score;
+			second = temp;
+
+			temp_name = best_name;
+			best_name = name;
+			sec_name = temp_name;
+		}
+		if (second < score && best > score) {
+			second = score;
+
+			sec_name = name;
+		}
+	}
+	cout << "The best score student is " << best_name << " and the score is " << best << endl;
+	cout << "The second score student is " << sec_name << " and the score is " << second << endl;
+
+	return 0;
+}
