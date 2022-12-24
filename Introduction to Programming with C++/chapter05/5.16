@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n1, n2, d;
+
+    cout << "Enter tow numbers: ";
+    cin >> n1; cin >> n2;
+
+    if (n1 < n2)
+        d = n1;
+    else
+        d = n2;
+
+    while (n1 % d != 0 || n2 % d != 0) {
+        d--;
+    }
+    cout << "The GCD of " << n1 << " and " << n2 << " is " << d;
+
+    return 0;
+}
