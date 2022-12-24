@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    char c;
+    int count = 0;
+    for (int i = 33; i <= 126; i++) {
+        c = i;
+        count++;
+
+        if (count % 10 == 0)
+            cout << c << endl;
+        else
+            cout << c << " ";
+    }
+
+    return 0;
+}
