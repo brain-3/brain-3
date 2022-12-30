@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+void printMatrix(int n);
+
+int main() {
+	
+	int num;
+	
+	cout << "Enter n: ";
+	cin >> num;
+
+	srand(time(0));
+	printMatrix(num);
+
+	return 0;
+}
+
+void printMatrix(int n) {
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cout << rand() % 2 << " ";
+		}
+		cout << endl;
+	}
+}
