@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+void displayPattern(int n);
+
+int main() {
+
+	int num;
+	
+	cout << "Enter the number: ";
+	cin >> num;
+
+	displayPattern(num);
+
+	return 0;
+}
+
+void displayPattern(int n) {
+	for (int i = 1; i <= n; i++) {
+		for (int j = n; j > i; j--) {
+			cout << "  ";
+		}
+		for(int k = i; k >=1; k--){
+			cout << k << " ";
+		}
+		cout << endl;
+	}
+}
