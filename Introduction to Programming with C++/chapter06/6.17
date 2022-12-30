@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+bool isValid(double side1, double side2, double side3);
+double area(double side1, double side2, double side3);
+
+int main() {
+	
+	double s1, s2, s3;
+	
+	cout << "Enter n: ";
+	cin >> s1; cin >> s2; cin >> s3;
+
+	if (isValid(s1, s2, s3) == 1) {
+		cout << area(s1, s2, s3) << endl;
+	}
+	else
+		cout << "Not a tirangle" << endl;
+	return 0;
+}
+
+bool isValid(double side1, double side2, double side3) {
+	return side1 + side2 > side3;
+}
+double area(double side1, double side2, double side3) {
+
+	return (side1 + side2 + side3) / 2;
+}
