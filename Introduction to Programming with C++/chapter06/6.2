@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int sumDigits(long n);
+
+int main() {
+
+	long num;
+	
+	cout << "Enter number: ";
+	cin >> num;
+	cout << sumDigits(num) << endl;
+
+	return 0;
+}
+int sumDigits(long n) {
+
+	long sum = 0;
+
+	do {
+		sum += (n % 10);
+
+		n = n / 10;
+
+	} while (n != 0);
+
+	return sum;
+}
