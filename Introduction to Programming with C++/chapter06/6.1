@@ -1,1 +1,28 @@
- 
+#include <iostream>
+using namespace std;
+
+int getPentagonalNumber(int n);
+void printPentagonalNumber(int printNum);
+
+int main()
+{
+	for (int i = 1; i <= 10; i++) {
+		for (int j = 1; j <= 10; j++) {
+			printPentagonalNumber(getPentagonalNumber(i * j));
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+
+int getPentagonalNumber(int n) {
+	int num;
+	num = n * (3 * n - 1) / 2;
+	
+	return num;
+}
+
+void printPentagonalNumber(int printNum) {
+	cout << printNum << " ";
+}
