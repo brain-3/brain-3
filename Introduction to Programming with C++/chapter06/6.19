@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+bool isPrime(int number);
+
+int main() {
+	
+	for (int i = 1; i <= 10000-2; i++) {
+		if (isPrime(i) == 1) {
+			if (isPrime(i + 2) == 1) {
+				cout << "(" << i << "," << i + 2 << ")" << endl;
+			}
+		}
+	}
+	return 0;
+}
+
+bool isPrime(int number) {
+	for (int divisor = 2; divisor <= number / 2; divisor++) {
+		if (number % divisor == 0) {
+			return false;
+		}
+	}
+	return true;
+}
