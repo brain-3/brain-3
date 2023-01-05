@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+	int num[100];
+	int result[101];
+
+	for (int i = 0; i <= 100; i++) {
+		result[i] = 0;
+	}
+
+	cout << "Enter the integers between 1 and 100: ";
+
+	for (int j = 0; j < 100; j++) {
+		cin >> num[j];
+		if (num[j] == 0)
+			break;
+		result[num[j]]++;
+	}
+
+	for (int k = 0; k <= 100; k++) {
+		if (result[k] > 0) 
+			cout << k << " occurs " << result[k] << " times" << endl;
+	}
+	return 0;
+}
