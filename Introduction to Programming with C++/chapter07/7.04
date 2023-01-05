@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+	int scores[100];
+	int result = 0;
+	int num = 0;
+
+	cout << "Enter the socre: ";
+
+	for (int i = 0; i < 100; i++) {
+		cin >> scores[i];
+		if (scores[i] < 0)
+			break;
+	}
+
+	for (int j = 0; j < 100; j++) {
+		if (scores[j] > 0) {
+			result += scores[j];
+			num++;
+		}
+	}
+	result = result / num;
+
+	for (int k = 0; k < 100; k++) {
+		if (scores[k] > 0) {
+			if (scores[k] > result) {
+				cout << scores[k] << " is higher than average" << endl;
+			}
+			else if (scores[k] == result) {
+				cout << scores[k] << " is same as average" << endl;
+			}
+			else
+				cout << scores[k] << " is lower than average" << endl;
+		}
+	}
+	return 0;
+}
