@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+	int num[10];
+	int count = 0;
+	int key;
+	bool noDuplication;
+
+	cout << "Enter ten numbers: ";
+	for (int i = 0; i < 10; i++) {
+		noDuplication = true;
+		cin >> key;
+
+		for (int j = 0; j < 10; j++) {
+			if (num[j] == key) {
+				noDuplication = false;
+				break;
+			}
+		}
+		if (noDuplication)
+			num[i] = key;
+		}
+
+	cout << "The distinct numbers are: ";
+	for (int i = 0; i < 10; i++) {
+		if (num[i] >= 0) {
+			cout << num[i] << " ";
+		}
+	}
+	return 0;
+}
