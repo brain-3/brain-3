@@ -5,14 +5,14 @@ double min(double array[], int size);
 
 int main() {
 
-	double num[10];
+	double array[10];
 
 	cout << "Enter ten numbers: ";
 	for (int i = 0; i < 10; i++) {
-		cin >> num[i];
+		cin >> array[i];
 	}
 
-	cout << "The minimum number is " << min(num, 10) << endl;
+	cout << "The minimum number is " << min(array, 10) << endl;
 	
 	return 0;
 }
