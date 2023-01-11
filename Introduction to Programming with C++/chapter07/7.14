@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+void bubbleSort(double array[], int listSize);
+void printList(double array[], int listSize);
+
+int main() {
+
+	double array[10];
+
+	cout << "Enter ten numbers: ";
+	for (int i = 0; i < 10; i++) {
+		cin >> array[i];
+	}
+
+	bubbleSort(array, 10);
+	cout << "Aftrer bubble sort: ";
+	printList(array, 10);
+	
+
+	return 0;
+}
+
+void bubbleSort(double array[], int listSize) {
+	bool changed = true;
+	double temp;
+
+	do {
+		changed = false;
+		for (int j = 0; j < listSize - 1; j++) {
+			if (array[j] > array[j + 1]) {
+				temp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = temp;
+				changed = true;
+			}
+		}
+	} while (changed);
+}
+
+void printList(double array[], int listSize) {
+	for (int i = 0; i < 10; i++) {
+		cout << array[i] << " ";
+	}
+}
