@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+int indexOfSmallestElement(double array[], int size);
+
+int main() {
+
+	double num[10];
+
+	cout << "Enter ten numbers: ";
+	for (int i = 0; i < 10; i++) {
+		cin >> num[i];
+	}
+
+	cout << "Index of Smallest element is " << indexOfSmallestElement(num, 10) << endl;
+	
+	return 0;
+}
+
+int indexOfSmallestElement(double array[], int size) {
+	
+	double min = array[0];
+	int index = 0;
+
+	for (int i = 1; i < 10; i++) {
+		if (min > array[i]) {
+			min = array[i];
+			index = i;
+		}
+	}
+	return index;
+}
