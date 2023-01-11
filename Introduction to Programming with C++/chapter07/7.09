@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+double min(double array[], int size);
+
+int main() {
+
+	double num[10];
+
+	cout << "Enter ten numbers: ";
+	for (int i = 0; i < 10; i++) {
+		cin >> num[i];
+	}
+
+	cout << "The minimum number is " << min(num, 10) << endl;
+	
+	return 0;
+}
+
+double min(double array[], int size) {
+
+	double min = array[0];
+
+	for (int i = 0; i < 10; i++) {
+		if (min > array[i]) {
+			min = array[i];
+		}
+	}
+	return min;
+}
