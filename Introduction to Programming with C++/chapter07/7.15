@@ -1,0 +1,32 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+
+	bool locker[100];
+	int count = 0;
+
+	for (int i = 0; i < 100; i++) {
+		locker[i] = false;
+	}
+
+	for (int j = 1; j < 100; j++) {
+		for (int k = j; k < 100; k = k+j+1) {
+			if (locker[k]) {
+				locker[k] = false;
+			}
+			else
+				locker[k] = true;
+		}
+	}
+
+	for (int l = 0; l < 100; l++) {
+		if ((l + 1) % 10 == 0) {
+			cout << locker[l] << endl;
+		}
+		else
+			cout << locker[l] << " ";
+	}
+	return 0;
+}
+
