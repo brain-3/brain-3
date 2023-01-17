@@ -1,0 +1,46 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+
+	int number, beanMachine;
+	int slots[50];
+	int count = 0;
+	int bean;
+	int right;
+
+	cout << "Enter the number of balls to drop: ";
+	cin >> number;
+
+	cout << "Enter the number of slots in the bean machine: ";
+	cin >> beanMachine;
+
+	cout << endl;
+
+	for (int i = 0; i < 50; i++) {
+		slots[i] = 0;
+	}
+
+	while (count < number) {
+		right = 0;
+		for (int i = 0; i < beanMachine-1; i++) {
+			bean = rand() % 2;
+
+			if (bean == 0)
+				cout << "L";
+			else {
+				cout << "R";
+				right++;
+			}
+		}
+		cout << endl;
+		count++;
+		slots[right]++;
+	}
+	cout << endl;
+
+
+
+	return 0;
+}
+
