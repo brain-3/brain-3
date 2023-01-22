@@ -3,11 +3,9 @@ using namespace std;
 
 int main() {
 
-	int number, beanMachine;
+	int number, beanMachine, bean, right, maxFrequency;
 	int slots[50];
 	int count = 0;
-	int bean;
-	int right;
 
 	cout << "Enter the number of balls to drop: ";
 	cin >> number;
@@ -23,7 +21,7 @@ int main() {
 
 	while (count < number) {
 		right = 0;
-		for (int i = 0; i < beanMachine-1; i++) {
+		for (int i= 0; i < beanMachine-1; i++) {
 			bean = rand() % 2;
 
 			if (bean == 0)
@@ -39,8 +37,18 @@ int main() {
 	}
 	cout << endl;
 
+	maxFrequency = slots[0];
+	for (int j = 1; j < beanMachine - 1; j++) {
+		if (maxFrequency < slots[j])
+			maxFrequency = slots[j];
+	}
 
-
-	return 0;
-}
-
+	for (int k = maxFrequency; k > 0; k--) {
+		for (int l = 0; l <= number; l++) {
+			if (slots[l] >= k)
+				cout << "0";
+			else
+				cout << " ";
+		}
+		cout << endl;
+	}
