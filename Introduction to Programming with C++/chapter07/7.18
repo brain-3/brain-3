@@ -1,0 +1,27 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+	int quzzle[8];
+	int queen;
+
+	for (int i = 0; i < 8; i++) {
+		quzzle[i] = rand() % 8;
+		for (int j = 0; j < i; j++) {
+			if (quzzle[i] == quzzle[j])
+				i--;
+		}
+	}
+
+	for (int k = 0; k < 8; k++) {
+		for (int l = 0; l < 8; l++) {
+			if (quzzle[l] == k)
+				cout << "|Q";
+			else
+				cout << "| ";
+		}
+		cout << "|" << endl;
+	}
+
+	return 0;
+}
