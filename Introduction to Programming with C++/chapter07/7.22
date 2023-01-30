@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int nums[10];
+
+    cout << "Enter ten integers: ";
+    for (int i = 0; i < 10; i++) {
+        cin >> nums[i];
+    }
+
+    for (int j = 0; j < 10; j++) {
+        for (int k = j + 1; k < 10; k++) {
+            cout << nums[j] << " " << nums[k] << endl;
+        }
+    }
+
+    return 0;
+}
