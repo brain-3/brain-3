@@ -15,7 +15,7 @@ int main()
     for (int i = 0; i < size1; i++) {
         cin >> list1[i];
     }
-    
+
     cout << "Enter list2: ";
     cin >> size2;
     for (int i = 0; i < size2; i++) {
@@ -23,12 +23,32 @@ int main()
     }
 
     merge(list1, size1, list2, size2, list3);
-    
+
     return 0;
 }
 
 void merge(const int list1[], int size1, const int list2[], int size2, int list3[]) {
-    for (int i = 0; i < size1 + size2; i++) {
-        list3[i] = list1[i];
-        list3[i + 1] = list2[i];
+
+    int index1 = 0;
+    int index2 = 0;
+    int index3 = 0;
+     
+    while (index1 < size1 && index2 < size2) {
+        if (list1[index1] < list2[index2])
+            list3[index3++] = list1[index1++];
+        else
+            list3[index3++] = list2[index2++];
     }
+
+    while(index1 < size1)
+        list3[index3++] = list1[index1++];
+
+    while (index2 < size2)
+        list3[index3++] = list2[index2++];
+
+
+    for (int i = 0; i < size1 + size2; i++) {
+        cout << list3[i] << " ";
+    }
+    cout << endl;
+}
