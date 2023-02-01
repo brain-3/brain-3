@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int partition(int list[], int size);
+
+int main()
+{
+	int list[80];
+	int size;
+
+	cout << "Enter list: ";
+	cin >> size;
+
+	partition(list, size);
+	
+	return 0;
+}
+
+int partition(int list[], int size) {
+	int temp, pivot;
+
+	pivot = size / 2;
+
+
+
+
+	return list;
+}
