@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+void inverse(const double A[][3], double inverseOfA[][3]);
+double deltaA(const double A[][3]);
+void printMatrix(double inverseOfA[][3]);
+
+int main() {
+
+	double A[3][3];
+	double inverseOfA[3][3];
+
+
+	cout << "Enter a11, a12, a13, a21, a22, a23, a31, a32, a33: ";
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			cin >> A[i][j];
+		}
+	}
+	if (deltaA(A) == 0)
+		cout << "No inverse matrix" << endl;
+	else {
+		inverse(A, inverseOfA);
+		printMatrix(inverseOfA);
+	}
+
+	return 0;
+}
+
+double deltaA(const double A[][3]) {
+	double result = 0;
+
+	result = A[0][0] * A[1][1] * A[2][2] +
+		A[2][0] * A[0][1] * A[1][2] +
+		A[0][2] * A[1][0] * A[2][1] -
+		A[0][2] * A[1][1] * A[2][0] -
+		A[0][0] * A[1][2] * A[2][1] -
+		A[2][2] * A[1][0] * A[0][1];
+
+	return result;
+}
+
+void inverse(const double A[][3], double inverseOfA[][3]) {
+
+	double determinant = deltaA(A);
+
+	inverseOfA[0][0] = (A[1][1] * A[2][2] - A[1][2] * A[2][1]) / determinant;
+	inverseOfA[0][1] = (A[0][2] * A[2][1] - A[0][1] * A[2][2]) / determinant;
+	inverseOfA[0][2] = (A[0][1] * A[1][2] - A[0][2] * A[1][1]) / determinant;
+
+	inverseOfA[1][0] = (A[1][2] * A[2][0] - A[1][0] * A[2][2]) / determinant;
+	inverseOfA[1][1] = (A[0][0] * A[2][2] - A[0][2] * A[2][0]) / determinant;
+	inverseOfA[1][2] = (A[0][2] * A[1][0] - A[0][0] * A[1][2]) / determinant;
+
+	inverseOfA[2][0] = (A[1][0] * A[2][1] - A[1][1] * A[2][0]) / determinant;
+	inverseOfA[2][1] = (A[0][1] * A[2][0] - A[0][0] * A[2][1]) / determinant;
+	inverseOfA[2][2] = (A[0][0] * A[1][1] - A[0][1] * A[1][0]) / determinant;
+
+}
+
+void printMatrix(double inverseOfA[][3]) {
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			cout << inverseOfA[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
