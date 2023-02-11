@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+	int matrix[4][4];
+	int row = 0;
+	int column = 0;
+	srand(time(0));
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			matrix[i][j] = rand() % 2;
+		}
+	}
+
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			cout << matrix[i][j];
+		}
+		cout << endl;
+	}
+
+
+	for (int i = 0; i < 4; i++) {
+		if (matrix[i][0] == 0 && matrix[i][1] == 0 && matrix[i][2] == 0 && matrix[i][3] == 0)
+			cout << "All 0's on row " << i << endl;
+		else if (matrix[i][0] == 1 && matrix[i][1] == 1 && matrix[i][2] == 1 && matrix[i][3] == 1)
+			cout << "All 1's on row " << i <<endl;
+		else
+			row++;
+		if(row == 4)
+			cout << "No same numers on a row" << endl;
+	}
+	for (int i = 0; i < 4; i++) {
+		if (matrix[0][i] == 0 && matrix[1][i] == 0 && matrix[2][i] == 0 && matrix[3][i] == 0)
+			cout << "All 0's on column " << i << endl;
+		else if (matrix[0][i] == 1 && matrix[1][i] == 1 && matrix[2][i] == 1 && matrix[3][i] == 1)
+			cout << "All 1's on column " << i << endl;
+		else 
+			column++;
+		if (column == 4)
+			cout << "No same numers on a column" << endl;
+	}
+
+	if (matrix[0][0] == 1 && matrix[1][1] == 1 && matrix[2][2] == 1 && matrix[3][3] == 1)
+		cout << "All 1's on the major diagonal" << endl;
+	else if (matrix[0][0] == 0 && matrix[1][1] == 0 && matrix[2][2] == 0 && matrix[3][3] == 0)
+		cout << "All 0's on the major diagonal" << endl;
+	else 
+		cout << "No same numers on the major diagonal" << endl;
+
+	if (matrix[0][3] == 1 && matrix[1][2] == 1 && matrix[2][1] == 1 && matrix[3][0] == 1)
+		cout << "All 1's on the sub-diagonal" << endl;
+	else if (matrix[0][3] == 0 && matrix[1][2] == 0 && matrix[2][1] == 0 && matrix[3][0] == 0)
+		cout << "All 0's on the sub-diagonal" << endl;
+	else
+		cout << "No same numers on the sub-diagonal" << endl;
+	
+	return 0;
+}
