@@ -1,0 +1,231 @@
+#define _CRT_SECURE_NO_WARNINGS 
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int MAX_INPUT_SIZE = 15;
+
+inline void error(const char* message) {
+	printf("%s\n", message);
+	exit(1);
+}
+
+class Print {
+private:
+	char user[10];
+	int imp; // 중요도는 1 to 5 까지만 가능
+	int pages; //페이지수는 1 to 20 까지만 가능
+
+public:
+	Print() {} // 기본 생성자
+	Print(const char* u, int i, int p) { // 매개 변수가 있는 생성자
+		strcpy(user, u);
+		imp = i;
+		pages = p;
+	}
+	~Print() {} // 소멸자
+
+	char* getUser() { // user를 반환
+		return user;
+	}
+
+	int getImp() { // imp(중요도)를 반환
+		return imp;
+	}
+
+	int getPages() { // pages(페이지 수)를 반환
+		return pages;
+	}
+
+	void setImp(int i) { // imp(중요도)를 설정
+		imp = i;
+	}
+
+	void setPages(int p) { // pages(페이지 수)를 설정
+		pages = p;
+	}
+};
+
+class InputPrintStack {
+private:
+	int top;
+	Print data[MAX_INPUT_SIZE];
+public:
+	InputPrintStack() { top = -1; }
+	~InputPrintStack() {}
+	bool isEmpty() { return top == -1; }
+	bool isFull() { return top == MAX_INPUT_SIZE - 1; }
+
+	void push(Print x) {
+		if (isFull()) error("스택 포화 에러\n");
+		data[++top] = x;
+	}
+
+	Print pop() {
+		if (isEmpty()) error("스택 공백 에러\n");
+		return data[top--];
+	}
+
+	Print peek() {}
+
+	void display() {
+		if (isEmpty() == false) {
+			cout << " Stack: ";
+			for (int i = 0; i <= top; i++)
+				cout << data[i].getUser() << " ";
+			cout << endl;
+		}
+	}
+};
+
+class OutputPrintQueue {
+public:
+	int front;
+	int rear;
+	Print data[MAX_INPUT_SIZE];
+public:
+	OutputPrintQueue() { front = rear = 0; }
+	~OutputPrintQueue() {}
+	bool isEmpty() { return front == rear; }
+	bool isFull() { return (rear + 1) % MAX_INPUT_SIZE == front; }
+
+	void enqueue(Print x) {
+		if (isFull())
+			error("큐 포화 에러\n");
+		else {
+			rear = (rear + 1) % MAX_INPUT_SIZE;
+			data[rear] = x;
+		}
+	}
+
+	Print dequeue() {
+		if (isEmpty())
+			error("큐 공백 에러\n");
+		else {
+			front = (front + 1) % MAX_INPUT_SIZE;
+			return data[front];
+		}
+	}
+
+	Print peek() {}
+
+	void display() {
+		if (isEmpty() == false) {
+			cout << " Queue: ";
+			int maxi = (front < rear) ? rear : rear + MAX_INPUT_SIZE;
+			for (int i = front + 1; i <= maxi; i++)
+				cout << data[i % MAX_INPUT_SIZE].getUser() << " ";
+			cout << endl;
+		}
+	}
+};
+
+class PrinterSim {
+private:
+	InputPrintStack input;
+	OutputPrintQueue output;
+
+public:
+	void insertInputPrints(Print x) {
+		if (input.isFull() == false)
+			input.push(x);
+	}
+
+	void removePrintJob() {
+		input.pop();
+	}
+
+	int compareImportance(Print a, Print b) {
+		if (a.getImp() < b.getImp())
+			return -1;
+		else if (a.getImp() == b.getImp())
+			return 1;
+		else
+			return 0;
+	}
+
+	int comparePages(Print a, Print b) {
+		if (a.getPages() < b.getPages())
+			return -1;
+		else if (a.getPages() == b.getPages())
+			return 1;
+	}
+
+	void movePrintsToOutputQueue() {
+		while (input.isEmpty() == false) {
+			output.enqueue(input.pop());
+		}
+	}
+
+	void outputPrintsByImportance() {
+		cout << "Result: ";
+		while (output.isEmpty() == false) {
+			int maxi = (output.front < output.rear) ? output.rear : output.rear + MAX_INPUT_SIZE;
+			Print max = output.dequeue();
+			for (int i = output.front + 1; i <= maxi; i++) {
+				Print temp = output.dequeue();
+				if (compareImportance(max, temp) == -1) {
+					output.enqueue(max);
+					max = temp;
+				}
+				else if (compareImportance(max, temp) == 1 && comparePages(max, temp) == -1) {
+					output.enqueue(max);
+					max = temp;
+				}
+				else {
+					output.enqueue(temp);
+				}
+			}
+			cout << max.getUser() << " ";
+		}
+		cout << endl;
+	}
+
+	void displayInput() {
+		input.display();
+	}
+
+	void displayOutput() {
+		output.display();
+	}
+};
+
+
+int main() {
+
+	PrinterSim sim;
+
+	sim.insertInputPrints(Print("A", 1, 5));
+	sim.insertInputPrints(Print("B", 2, 13));
+	sim.insertInputPrints(Print("C", 3, 3));
+	sim.insertInputPrints(Print("D", 4, 15));
+	sim.insertInputPrints(Print("E", 5, 10));
+	sim.removePrintJob();
+	sim.insertInputPrints(Print("F", 2, 10));
+	sim.removePrintJob();
+	sim.insertInputPrints(Print("G", 3, 10));
+	sim.removePrintJob();
+	sim.insertInputPrints(Print("H", 4, 20));
+	sim.insertInputPrints(Print("I", 5, 20));
+	sim.insertInputPrints(Print("J", 4, 18));
+	sim.insertInputPrints(Print("K", 1, 20));
+	sim.removePrintJob();
+	sim.insertInputPrints(Print("L", 4, 10));
+	sim.insertInputPrints(Print("M", 5, 19));
+	sim.insertInputPrints(Print("N", 2, 19));
+	sim.removePrintJob();
+	sim.insertInputPrints(Print("O", 1, 19));
+	sim.insertInputPrints(Print("P", 1, 18));
+	sim.removePrintJob();
+	sim.insertInputPrints(Print("Q", 3, 18));
+	sim.insertInputPrints(Print("R", 4, 19));
+	// 인쇄 요청 끝
+
+	sim.displayInput();
+	sim.movePrintsToOutputQueue();
+	sim.displayOutput();
+	sim.outputPrintsByImportance();
+	//인쇄 요청 처리 끝
+
+	return 0;
+}
