@@ -41,7 +41,7 @@ class LinkedList {
 	Node	org;	// head node (not head pointer!)
 
 public:
-	LinkedList() : org() {  } 
+	LinkedList() : org() {  }
 	~LinkedList() { clear(); }
 
 	void clear() {
@@ -109,13 +109,31 @@ public:
 		org.setLink(prev);
 	}
 
+
 	// return new list that have data fields of two lists in descending order
 	LinkedList* mergeTwoLists(LinkedList* list2) {
-		LinkedList* sorted = list2;
-		Node* head = getHead();
-		
+		LinkedList* list1 = this;
+		LinkedList* sorted = new LinkedList();
 
-			return sorted;
+		Node* node1 = getHead();
+		Node* node2 = list2->getHead();
+
+		while (node1 != NULL && node2 != NULL) {
+			if (node1->getData() < node2->getData()) {
+				sorted->insert(0, node1);
+				node1 = node1->getLink();
+			}
+			else {
+				sorted->insert(0, node2);
+				node2 = node2->getLink();
+			}
+
+			/*if (node1 == NULL)
+				sorted->insert(0, node2);
+			if (node2 == NULL)
+				sorted->insert(0, node1);*/
+		}
+		return sorted;
 	}
 };
 
@@ -146,6 +164,7 @@ int main()
 	list2->clear();
 	list1->display("List1(     end     )");
 	list2->display("List2(     end     )");
+
 
 	return 0;
 }
