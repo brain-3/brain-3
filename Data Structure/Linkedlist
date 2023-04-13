@@ -112,27 +112,32 @@ public:
 
 	// return new list that have data fields of two lists in descending order
 	LinkedList* mergeTwoLists(LinkedList* list2) {
-		LinkedList* list1 = this;
 		LinkedList* sorted = new LinkedList();
 
-		Node* node1 = getHead();
-		Node* node2 = list2->getHead();
+		Node* p1 = getHead();
+		Node* p2 = list2->getHead();
 
-		while (node1 != NULL && node2 != NULL) {
-			if (node1->getData() < node2->getData()) {
-				sorted->insert(0, node1);
-				node1 = node1->getLink();
+		while (p1 != NULL && p2 != NULL) {
+			if (p1->getData() >= p2->getData()) {
+				sorted->insert(sorted->size(), new Node(p1->getData()));
+				p1 = p1->getLink();
 			}
 			else {
-				sorted->insert(0, node2);
-				node2 = node2->getLink();
+				sorted->insert(sorted->size(), new Node(p2->getData()));
+				p2 = p2->getLink();
 			}
-
-			/*if (node1 == NULL)
-				sorted->insert(0, node2);
-			if (node2 == NULL)
-				sorted->insert(0, node1);*/
 		}
+
+		while (p1 != NULL) {
+			sorted->insert(sorted->size(), new Node(p1->getData()));
+			p1 = p1->getLink();
+		}
+
+		while (p2 != NULL) {
+			sorted->insert(sorted->size(), new Node(p2->getData()));
+			p2 = p2->getLink();
+		}
+
 		return sorted;
 	}
 };
