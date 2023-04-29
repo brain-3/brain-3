@@ -1,0 +1,174 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+inline void error(char* str) {
+	fprintf(stderr, "%s\n", str);
+	exit(1);
+};
+
+class Node {
+	Node* link; // pointer to next node
+	int		data; // data field of 'this' node
+
+public:
+	Node(int val = 0) : data(val), link(NULL) { }
+	Node* getLink() { return link; }
+	void setLink(Node* next) { link = next; }
+	void display() { printf(" <%2d>", data); }
+	int getData() { return data; }
+	void setData(int newData) { data = newData; } // newly added function
+
+	// insert new node (n) next to current node
+	void insertNext(Node* n) {
+		if (n != NULL) {
+			n->link = link;
+			link = n;
+		}
+	}
+
+	// remove next node from current node
+	Node* removeNext() {
+		Node* removed = link;
+		if (removed != NULL)
+			link = removed->link;
+		return removed;
+	}
+};
+
+class LinkedList {
+	Node	org;	// head node (not head pointer!)
+
+public:
+	LinkedList() : org(0) { }
+	~LinkedList() { clearRecursive(getHead()); }
+
+	Node* getHead() { return org.getLink(); }
+	bool isEmpty() { return getHead() == NULL; }
+
+	// return node in position 'pos' from the list
+	Node* getEntry(int pos) {
+		Node* n = &org;
+		for (int i = -1; i < pos; i++, n = n->getLink())
+			if (n == NULL) break;
+		return n;
+	}
+
+	// insert new node (n) in position 'pos'
+	void insert(int pos, Node* n) {
+		Node* prev = getEntry(pos - 1);
+		if (prev != NULL)
+			prev->insertNext(n);
+	}
+
+	// remove a node in position 'pos'
+	Node* remove(int pos) {
+		Node* prev = getEntry(pos - 1);
+		return prev->removeNext();
+	}
+
+	// display function that calls displayRecursive to print all data of nodes in the linked list
+	void displaySup(const char* str = "List") {
+		printf("%s", str);
+		printf("[list size %2d] : ", sizeRecursive(getHead()));
+
+		displayRecursive(getHead());
+	}
+
+	// 1. calculate size of linked list by recursion
+	int sizeRecursive(Node* curr) {
+		if (curr == NULL) //만약 현재 노드가 NULL이라면 크기는 0
+			return 0;
+		else //그렇지 않으면 현재 노드를 포함한 나머지 노드들의 크기를 재귀적으로 계산하여 더해줌
+			return 1 + sizeRecursive(curr->getLink());
+	}
+
+	// 2. display data fields of nodes in the list by recursion
+	void displayRecursive(Node* curr) {
+		if (curr == NULL) //만약 현재 노드가 NULL이라면 줄바꿈을 하여 함수 종료
+			printf("\n");
+		else {
+			curr->display(); //그렇지 않으면 현재 노드의 데이터를 출력하고 나머지 노드들을 재귀적으로 출력
+			displayRecursive(curr->getLink());
+		}
+	}
+
+	// 3. insert new node (n) in the right position by recursion
+	void insertRecursive(Node* curr, int newData) {
+		Node* newNode = new Node(newData); //newNode에 newData값을 저장
+		static int count = 0; //노드를 추가할 위치를 찾기 위해 인덱스를 저장하는 변수 count
+		count++;
+		// 만약 현재 노드가 NULL이거나 현재 노드의 데이터보다 새로운 데이터가 작으면 노드를 추가할 위치를 찾은 것이므로 해당 위치에 새로운 노드를 삽입
+		if (curr==NULL || curr->getData() > newData) { 
+			insert(count - 1, newNode);
+		}
+		else//그렇지 않으면 다음 노드로 이동하여 재귀적으로 삽입위치를 찾음
+			insertRecursive(curr->getLink(), newData);
+	}
+
+	// 4. clear all nodes in the linked list by recursion
+	void clearRecursive(Node* curr) {
+		if (curr == NULL) //만약 현재 노드가 NULL이라면 함수 종료
+			return;
+		else{ //그렇지 않으면 노드들을 재귀적으로 호출하여 노드를 삭제함
+			clearRecursive(curr->getLink());
+			delete remove(0);
+		}
+	}
+
+	// 5. reverse data of all nodes in the linked list by recursion
+	void reverseRecursive(int start, int end) {
+		Node* startNode = getEntry(start); //시작지점 노드를 저장
+		Node* endNode = getEntry(end); //끝지점 노드를 저장
+
+		if (start >= end) { //시작 인덱스가 끝 인덱스보다 크거나 같으면 함수 종료
+			return;
+		}
+		
+		//시작노드와 끝노드의 데이터를 서로 바꿈
+		int temp = startNode->getData();
+		startNode->setData(endNode->getData());
+		endNode->setData(temp);
+
+		//시작과 끝 지점을 한칸씩 이동하여 번위를 줄이고 다시 reverseRecursive함수를 호출
+		reverseRecursive(start + 1, end-1);
+	}
+
+	void reverseRecursive2(int start, int end) {
+		if (start >= end) // 시작 인덱스와 끝 인덱스가 같거나 역전할 노드가 없는 경우, 함수 종료
+			return; 
+
+		Node* left = getEntry(start); // 역전할 노드 중 가장 왼쪽 노드
+		Node* right = getEntry(end); // 역전할 노드 중 가장 오른쪽 노드
+
+		int temp = left->getData(); // 가장 왼쪽 노드의 데이터를 temp 변수에 저장
+		left->setData(right->getData()); // 가장 오른쪽 노드의 데이터를 가장 왼쪽 노드의 데이터로 덮음
+		right->setData(temp); // temp에 저장된 데이터를 가장 오른쪽 노드의 데이터로 덮음
+
+		reverseRecursive2(start + 1, end - 1); // 가장 왼쪽과 가장 오른쪽 노드를 제외한 나머지 노드들을 재귀적으로 역전
+	}
+};
+
+int main()
+{
+	LinkedList* list1 = new LinkedList();
+
+	list1->insert(0, new Node(100));
+	list1->insert(0, new Node(90));
+	list1->insert(0, new Node(80));
+	list1->insert(0, new Node(70));
+	list1->insert(0, new Node(60));
+	list1->insert(0, new Node(40));
+	list1->insert(0, new Node(30));
+	list1->insert(0, new Node(20));
+	list1->insert(0, new Node(10));
+	list1->displaySup("List1(        initial        )");
+	list1->insertRecursive(list1->getHead(), 50);
+	list1->displaySup("List1(      after insert     )");
+	list1->reverseRecursive(0, list1->sizeRecursive(list1->getHead()) - 1);
+	list1->displaySup("List1(     after reverse     )");
+	list1->clearRecursive(list1->getHead());
+	list1->displaySup("List1(      after clear      )");
+
+	return 0;
+}
