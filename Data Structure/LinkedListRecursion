@@ -95,15 +95,18 @@ public:
 
 	// 3. insert new node (n) in the right position by recursion
 	void insertRecursive(Node* curr, int newData) {
-		Node* newNode = new Node(newData); //newNode에 newData값을 저장
-		static int count = 0; //노드를 추가할 위치를 찾기 위해 인덱스를 저장하는 변수 count
-		count++;
-		// 만약 현재 노드가 NULL이거나 현재 노드의 데이터보다 새로운 데이터가 작으면 노드를 추가할 위치를 찾은 것이므로 해당 위치에 새로운 노드를 삽입
-		if (curr==NULL || curr->getData() > newData) { 
-			insert(count - 1, newNode);
+		Node* newNode = new Node(newData); // 새로운 노드 생성
+		if (curr->getData() > newData) { // 현재 노드의 데이터 값이 새로운 데이터 값보다 큰 경우
+			newNode->setLink(curr); // 새로운 노드를 현재 노드 앞에 삽입
+			org.setLink(newNode); // 새로운 노드가 리스트의 첫 번째 노드가 되도록 head 포인터 변경
 		}
-		else//그렇지 않으면 다음 노드로 이동하여 재귀적으로 삽입위치를 찾음
-			insertRecursive(curr->getLink(), newData);
+		else if (curr->getLink() == NULL || curr->getLink()->getData() > newData) { // 현재 노드의 다음 노드가 NULL이거나 다음 노드의 데이터 값이 새로운 데이터 값보다 큰 경우
+			newNode->setLink(curr->getLink()); // 새로운 노드를 현재 노드의 다음 노드 앞에 삽입
+			curr->setLink(newNode); // 현재 노드의 다음 노드를 새로운 노드로 변경
+		}
+		else {
+			insertRecursive(curr->getLink(), newData); // 다음 노드를 탐색
+		}
 	}
 
 	// 4. clear all nodes in the linked list by recursion
