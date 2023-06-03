@@ -1,0 +1,310 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_ELEMENT	100
+
+inline void error(char* str) {
+	fprintf(stderr, "%s\n", str);
+	exit(1);
+};
+
+class LinkedNode {
+	LinkedNode* link;
+	int data;
+	char category;
+public:
+	LinkedNode() { link = NULL; data = 0; category = '\n'; }
+	LinkedNode(char c, int d) : category(c), data(d) { link = NULL; }
+	LinkedNode* getLink() { return link; }
+	void setLink(LinkedNode* next) { link = next; }
+	char getCategory() { return category; }
+	void setCategory(char c) { category = c; }
+	void displayCatAndData() { printf("<%c %d> ", category, data); }
+	void displayData() { printf("<%d> ", data); }
+	int getData() { return data; }
+
+	void insertNext(LinkedNode* n) { setLink(n); }
+
+	LinkedNode* removeNext() {
+		LinkedNode* removed = link;
+		if (remove != NULL)
+			link = removed->getLink();
+		return removed;
+	}
+};
+
+class LinkedList {
+	LinkedNode* org;
+public:
+	LinkedList(): org(NULL) { }
+
+	void clear() { while (!isEmpty()) delete remove(0); }
+	LinkedNode* getHead() { return org; }
+	bool isEmpty() { return getHead() == NULL; }
+
+	LinkedNode* getEntry(int pos) {
+		if (pos < 0)
+			return NULL;
+		LinkedNode* n = org;
+		for (int i = 0; i < pos && n != NULL; i++)
+			n = n->getLink();
+
+		return n;
+	}
+
+	void insert(int pos, LinkedNode* n) {
+		if (pos < 0) return;
+		if (pos == 0) {
+			n->setLink(org);
+			org = n;
+		}
+		else {
+			LinkedNode* prev = getEntry(pos - 1);
+			if (prev != NULL) {
+				n->setLink(prev->getLink());
+				prev->setLink(n);
+			}
+		}
+	}
+
+	LinkedNode* remove(int pos) { 
+		if (pos < 0) return NULL;
+		LinkedNode* removed = NULL;
+		if (pos == 0) {
+			removed = org;
+			if (removed != NULL)
+				org = removed->getLink();
+		}
+		else {
+			LinkedNode* prev = getEntry(pos - 1);
+			if (prev != nullptr) {
+				removed = prev->removeNext();
+			}
+		}
+		return removed;
+	}
+
+	int size() {
+		int count = 0;
+		LinkedNode* n = org;
+		while (n != NULL) {
+			count++;
+			n = n->getLink();
+		}
+		return count;
+	}
+
+	void displayCatAndData(const char* str = "List") { 
+		printf("%s[list size %d] : " ,str, size());
+		LinkedNode* n = org;
+		while (n != NULL) {
+			n->displayCatAndData();
+			n = n->getLink();
+		}
+		printf("\n");
+	}
+
+	void displayData(const char* str = "List") {
+		printf("%s[list size %d] : ",str, size());
+		LinkedNode* n = org;
+		while (n != nullptr) {
+			n->displayData();
+			n = n->getLink();
+		}
+		printf("\n");
+	}
+
+};
+
+class HeapNode
+{
+public:
+	int		key;
+
+	HeapNode():key(0) { }
+	bool hasKey(int val) { return key == val; }
+	void setKey(int val) { key = val; }
+	int getKey() { return key; }
+
+};
+
+class MinHeap
+{
+	HeapNode node[MAX_ELEMENT];
+	int size;
+
+public:
+	MinHeap(): size(0) { }
+	bool isEmpty() { return size == 0; }
+	bool isFull() { return size == MAX_ELEMENT - 1; }
+
+	HeapNode& getParent(int i) { return node[i / 2]; }
+	HeapNode& getLeft(int i) { return node[i * 2]; }
+	HeapNode& getRight(int i) { return node[i * 2 + 1]; }
+
+	void insert(int key) { 
+		if (isFull()) return;
+		int i = ++size;
+		while (i != 1 && key > getParent(i).getKey()) {
+			node[i] = getParent(i);
+			i /= 2;
+		}
+		node[i].setKey(key);
+	}
+
+	HeapNode remove() {
+		if (isEmpty()) error("Error");
+		HeapNode item = node[1];
+		HeapNode last = node[size--];
+		int parent = 1;
+		int child = 2;
+		while (child <= size) {
+			if (child < size && getLeft(parent).getKey() < getRight(parent).getKey())
+				child++;
+			if (last.getKey() <= node[child].getKey())
+				break;
+			node[parent] = node[child];
+			parent = child;
+			child *= 2;
+		}
+		node[parent] = last;
+		return item;
+	}
+};
+void sortThreeListsByCategory(LinkedList* list1, LinkedList* list2, LinkedList* list3) {
+	LinkedList* mergedList = new LinkedList();
+	LinkedList* lists[3] = { list1, list2, list3 };
+
+	for (int i = 0; i < 3; i++) {
+		LinkedNode* node = lists[i]->getHead();
+		while (node != NULL) {
+			mergedList->insert(mergedList->size(), new LinkedNode(node->getCategory(), node->getData()));
+			node = node->getLink();
+		}
+	}
+
+	int listSize = mergedList->size();
+	for (int i = 0; i < listSize - 1; i++) {
+		int minIndex = i;
+		for (int j = i + 1; j < listSize; j++) {
+			LinkedNode* node1 = mergedList->getEntry(minIndex);
+			LinkedNode* node2 = mergedList->getEntry(j);
+			if (node1->getCategory() > node2->getCategory() ||
+				(node1->getCategory() == node2->getCategory() && node1->getData() > node2->getData())) {
+				minIndex = j;
+			}
+		}
+		if (minIndex != i) {
+			LinkedNode* temp = mergedList->remove(minIndex);
+			mergedList->insert(i, temp);
+		}
+	}
+
+	list1->clear();
+	list2->clear();
+	list3->clear();
+	LinkedNode* node = mergedList->getHead();
+	while (node != NULL) {
+		char category = node->getCategory();
+		switch (category) {
+		case 'A':
+			list1->insert(list1->size(), new LinkedNode(category, node->getData()));
+			break;
+		case 'B':
+			list2->insert(list2->size(), new LinkedNode(category, node->getData()));
+			break;
+		case 'C':
+			list3->insert(list3->size(), new LinkedNode(category, node->getData()));
+			break;
+		}
+		node = node->getLink();
+	}
+
+	delete mergedList;
+}
+
+LinkedList* sortThreeListsByDataOnly(LinkedList* list1, LinkedList* list2, LinkedList* list3) {
+LinkedList* mergedList = new LinkedList();
+LinkedList* lists[3] = { list1, list2, list3 };
+
+for (int i = 0; i < 3; i++) {
+	LinkedNode* node = lists[i]->getHead();
+	while (node != NULL) {
+		mergedList->insert(mergedList->size(), new LinkedNode(node->getCategory(), node->getData()));
+		node = node->getLink();
+	}
+}
+
+int listSize = mergedList->size();
+for (int i = 0; i < listSize - 1; i++) {
+	int minIndex = i;
+	for (int j = i + 1; j < listSize; j++) {
+		LinkedNode* node1 = mergedList->getEntry(minIndex);
+		LinkedNode* node2 = mergedList->getEntry(j);
+		if (node1->getData() > node2->getData()) {
+			minIndex = j;
+		}
+	}
+	if (minIndex != i) {
+		LinkedNode* temp = mergedList->remove(minIndex);
+		mergedList->insert(i, temp);
+	}
+}
+
+return mergedList; }
+
+
+
+int main()
+{
+	LinkedList* list1 = new LinkedList();
+	LinkedList* list2 = new LinkedList();
+	LinkedList* list3 = new LinkedList();
+
+	list1->insert(0, new LinkedNode('A', 331));
+	list1->insert(0, new LinkedNode('C', 79));
+	list1->insert(0, new LinkedNode('A', 21));
+	list1->insert(0, new LinkedNode('C', 87));
+	list1->insert(0, new LinkedNode('B', 471));
+	list1->insert(0, new LinkedNode('C', 130));
+	list1->insert(0, new LinkedNode('A', 27));
+	list1->insert(0, new LinkedNode('B', 93));
+
+
+	list2->insert(0, new LinkedNode('C', 103));
+	list2->insert(0, new LinkedNode('A', 421));
+	list2->insert(0, new LinkedNode('C', 112));
+	list2->insert(0, new LinkedNode('A', 336));
+	list2->insert(0, new LinkedNode('B', 421));
+	list2->insert(0, new LinkedNode('C', 331));
+	list2->insert(0, new LinkedNode('A', 521));
+	list2->insert(0, new LinkedNode('B', 31));
+
+
+	list3->insert(0, new LinkedNode('C', 93));
+	list3->insert(0, new LinkedNode('B', 189));
+	list3->insert(0, new LinkedNode('A', 66));
+	list3->insert(0, new LinkedNode('B', 672));
+	list3->insert(0, new LinkedNode('B', 79));
+	list3->insert(0, new LinkedNode('A', 81));
+	list3->insert(0, new LinkedNode('C', 303));
+	list3->insert(0, new LinkedNode('B', 269));
+
+	printf("Unsorted and mixed lists\n");
+	list1->displayCatAndData();
+	list2->displayCatAndData();
+	list3->displayCatAndData();
+	printf("\n\n");
+
+	sortThreeListsByCategory(list1, list2, list3);
+	printf("Sorting three lists based data and category\n");
+	list1->displayCatAndData();
+	list2->displayCatAndData();
+	list3->displayCatAndData();
+	printf("\n\n");
+
+	printf("Sorting three lists based data only\n");
+	LinkedList* list4 = sortThreeListsByDataOnly(list1, list2, list3);
+	list4->displayData();
+
+	return 0;
+}
