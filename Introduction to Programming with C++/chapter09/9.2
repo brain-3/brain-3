@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+class Fan{
+    public:
+        int speed;
+        bool on;
+        double radius;
+
+        Fan() {
+            speed = 1;
+            on = false;
+            radius = 5;
+        }
+
+        Fan(int s, bool o, double r){
+            speed = s;
+            on = o;
+            radius = r;
+        }
+
+        int getSpeed() {
+            return speed;
+        }
+
+        bool getOn() {
+            return on;
+        }
+
+        double getRadius() {
+            return radius;
+        }
+};
+
+int main() {
+
+    Fan f1(3, true, 10);
+    Fan f2(3, false, 5);
+
+    cout << "f1's speed: " << f1.getSpeed() << endl;
+    cout << "f1's on: " << f1.getOn() << endl;
+    cout << "f1's radius: " << f1.getRadius() << endl;
+    cout << endl;
+    cout << "f2's speed: " << f2.getSpeed() << endl;
+    cout << "f2's on: " << f2.getOn() << endl;
+    cout << "f2's radius: " << f2.getRadius() << endl;
+
+    return 0;
+}
