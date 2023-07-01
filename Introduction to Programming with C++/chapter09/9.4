@@ -1,0 +1,43 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+class MyPoint{
+    private:
+        double x;
+        double y;
+    
+    public:
+        MyPoint(){
+            x = 0;
+            y = 0;
+        }
+
+        MyPoint(double x, double y){
+            this->x = x;
+            this->y = y;
+        }
+
+        double getX(){
+            return x;
+        }
+        double getY(){
+            return y;
+        }
+
+        double distance(MyPoint m){
+            double result  = (m.x - x) * (m.x - x) + 
+                             (m.y - y) * (m.y - y);
+            
+            return sqrt(result);                
+        }
+};
+
+int main() {
+    MyPoint m1;
+    MyPoint m2(10, 30.5);
+
+    cout << m1.distance(m2) << endl;
+    
+    return 0;
+}
