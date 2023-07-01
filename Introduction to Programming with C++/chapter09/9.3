@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+class Account {
+    private:
+    int id;
+    double balance;
+    double annualInterestRate;
+
+    public:
+    Account(){
+        id = 0;
+        balance = 0;
+        annualInterestRate = 0;
+    }
+
+    void setId(int id){
+        this->id = id;
+    }
+    int getId(){
+        return id;
+    }
+
+    void setBalance(double balance){
+        this->balance = balance;
+    }
+    double getBalance(){
+        return balance;
+    }
+
+    void setAnnualInterestRate(double a){
+        annualInterestRate = a;
+    }
+    double getAnnualInterestRate(){
+        return annualInterestRate;
+    }
+
+    double getMonthlyInterestRate(){
+        if(balance == 0){
+            cout << "No money"<< endl;
+            return 0;
+        }
+        else
+            return (balance * annualInterestRate)/12;
+    }
+
+    void withDraw(double amount){
+        if(balance == 0){
+            cout << "No money"<< endl;
+        }
+        else
+            balance -= amount;
+    }
+
+    void deposit(double amount){
+        balance += amount;
+    }
+};
+
+int main() {
+
+    Account a1;
+    a1.setId(1122);
+    a1.setBalance(20000);
+    a1.setAnnualInterestRate(4.5);
+
+    a1.withDraw(2500);
+    a1.deposit(3000);
+
+    cout << "a1's balance: "<< a1.getBalance() << endl;
+    cout << "a1's interest rate: " << a1.getMonthlyInterestRate() << endl;
+
+    return 0;
+}
