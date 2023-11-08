@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 평가 페이지</title>
+</head>
+<body>
+    <form action="/eva" method="POST">
+    <div class="container">
+            <h1><%= users[0].dataValues.username%>님과의 프로젝트 후기</h1>
+            <table>
+            <tr>
+                    <td><input id="reliability", type ="checkbox", name="reliability" value=1>
+                    <label>신뢰성이 있어요</label></td>
+            </tr>
+            <tr>
+                <td><input id="solving", type ="checkbox", name="solving" value=1>
+                    <label>문제를 잘 해결해요</label></td>
+            </tr>
+            <tr>
+                <td><input id="communication", type ="checkbox", name="communication" value=1>
+                    <label>커뮤니케이션 능력이 뛰어나요</label></td>
+            </tr>
+            <tr>
+                <td><input id="attitude", type ="checkbox", name="attitude" value=1>
+                    <label>다른 의견을 존중하고 이해하려는 태도가 있어요</label></td>
+            </tr>
+        </table>
+        <input type="submit" value="제출하기">
+    </form>
+</body>
+</html>
