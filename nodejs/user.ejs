@@ -4,96 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사용자 평가 페이지</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .rating {
-            text-align: center;
-        }
-
-        .rating input[type="radio"] {
-            display: none;
-        }
-
-        .rating label {
-            cursor: pointer;
-            font-size: 24px;
-        }
-
-        .rating label:before {
-            content: "\2605";
-        }
-
-        .rating input[type="radio"]:checked ~ label:before {
-            content: "\2605\2605";
-            color: gold;
-        }
-
-        .comment {
-            margin-top: 20px;
-        }
-
-        .comment textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .submit {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .submit input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h1><%= users[0].dataValues.username%></h1>
-        <div class="rating">
-            <input type="radio" id="star5" name="rating" value="5" />
-            <label for="star5"></label>
-            <input type="radio" id="star4" name="rating" value="4" />
-            <label for="star4"></label>
-            <input type="radio" id="star3" name="rating" value="3" />
-            <label for="star3"></label>
-            <input type="radio" id="star2" name="rating" value="2" />
-            <label for="star2"></label>
-            <input type="radio" id="star1" name="rating" value="1" />
-            <label for="star1"></label>
-        </div>
-        <div class="comment">
-            <textarea placeholder="평가 및 코멘트를 남겨주세요" rows="4"></textarea>
-        </div>
-        <div class="submit">
-            <input type="submit" value="평가 제출">
-        </div>
-    </div>
+        <h1><%= users[0].dataValues.username%>님이 받은 평가</h1>
+        <table>
+            <tr>
+                <td><label>신뢰성이 있어요</label></td>
+                <td><%= evaluations[0].dataValues.reliability %></td>
+            </tr>
+            <tr>
+                <td><label>문제를 잘 해결해요</label></td>
+               <td><%= evaluations[0].dataValues.solving %></td>
+            </tr>
+            <tr>
+                <td><label>커뮤니케이션 능력이 뛰어나요</label></td>
+                <td><%= evaluations[0].dataValues.communication %></td>
+            </tr>
+            <tr>
+                <td><label>다른 의견을 존중하고 이해하려는 태도가 있어요</label></td>
+                <td><%= evaluations[0].dataValues.attitude %></td>
+            </tr>
+        </table>
 </body>
 </html>
