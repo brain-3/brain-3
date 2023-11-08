@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈 페이지</title>
+</head>
+<body>
+    <%- include('header') %>
+    <h1><a href="/home">메인 페이지</a></h1>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a href="/new" class="btn">회원가입</a>
+            <a href="/login" class="btn">로그인</a>
+            <a href="/user" class="btn">마이페이지</a>
+            <input type="text" placeholder="학번을 입력하세요">
+            <button>검색</button>
+        </div>
+    </nav>
+
+    <h1><%= users[0].user.username%></h1>
+</body>
+</html>
