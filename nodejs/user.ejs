@@ -1,30 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사용자 평가 페이지</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내 평가 페이지</title>
+  <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .recommendation-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        .subtitle {
+            color: #2f2f2f;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .content {
+            color: #007bff;
+            font-size: 18px;
+        }
+        
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1><%= users[0].dataValues.username%>님이 받은 평가</h1>
-        <table>
-            <tr>
-                <td><label>신뢰성이 있어요</label></td>
-                <td><%= evaluations[0].dataValues.reliability %></td>
-            </tr>
-            <tr>
-                <td><label>문제를 잘 해결해요</label></td>
-               <td><%= evaluations[0].dataValues.solving %></td>
-            </tr>
-            <tr>
-                <td><label>커뮤니케이션 능력이 뛰어나요</label></td>
-                <td><%= evaluations[0].dataValues.communication %></td>
-            </tr>
-            <tr>
-                <td><label>다른 의견을 존중하고 이해하려는 태도가 있어요</label></td>
-                <td><%= evaluations[0].dataValues.attitude %></td>
-            </tr>
-        </table>
+  <%- include('header') %>
+  <div class="recommendation-box">
+  <h2 class="subtitle">내가 받은 평가의 평균 점수</h2>
+  <h2 class="content"> <%= average %></h2>
+  </div>
 </body>
 </html>
