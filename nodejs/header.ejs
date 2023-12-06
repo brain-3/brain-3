@@ -1,5 +1,96 @@
-<div class="container-fluid">
-    <a class="navbar-brand" href="/">HOME</a>
-    <a href="/singup" class="btn">회원가입</a>
-    <a href="/write" class="btn">로그인</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+
+        .container-fluid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: #fff; /* 글씨 색깔을 흰색으로 변경 */
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            color: #e0e0e0; /* Hover 시 색깔 변경 */
+        }
+
+        .navbar button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navbar button:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar input {
+            padding: 5px;
+            margin-right: 5px;
+        }
+
+        .navbar {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a href="/" class="btn btn-primary"><i class="fas fa-home"></i> 홈</a>
+            <a href="/new" class="btn btn-primary"><i class="fas fa-user-plus"></i> 회원가입</a>
+            <a href="/login" class="btn btn-success"><i class="fas fa-sign-in-alt"></i> 로그인</a>
+            <a href="/user" class="btn btn-info"><i class="fas fa-user"></i> 마이페이지</a>
+            <a href="/eva" class="btn btn-warning"><i class="fas fa-star"></i> 평가하기</a>
+            <!-- <input type="text" placeholder="이름을 입력하세요">
+            <button class="btn btn-secondary">검색</button> -->
+        </div>
+    </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var userId = localStorage.getItem('user_id');
+
+            if (userId) {
+                var myPageLink = document.querySelector('a[href="/user"]');
+                if (myPageLink) {
+                    myPageLink.href = '/user?user_id=' + userId;
+                }
+                var myPageLink2 = document.querySelector('a[href="/"]');
+                if (myPageLink2) {
+                    myPageLink2.href = '/?user_id=' + userId;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
