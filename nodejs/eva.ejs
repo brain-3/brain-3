@@ -1,33 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사용자 평가 페이지</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>사용자 평가 페이지</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .rating {
+      unicode-bidi: bidi-override;
+      direction: rtl;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      display: inline-block;
+      padding: 5px;
+      font-size: 24px;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .rating label:hover,
+    .rating label:hover ~ label,
+    .rating input:checked ~ label {
+      color: #ffcc00;
+    }
+    .recommendation-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+    .submit-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+
+
+    .subtitle {
+            color: #2f2f2f;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .content {
+            color: #007bff;
+            font-size: 18px;
+        }
+  </style>
 </head>
 <body>
-    <form action="/eva" method="POST">
-    <div class="container">
-            <h1><%= users[0].dataValues.username%>님과의 프로젝트 후기</h1>
-            <table>
-            <tr>
-                    <td><input id="reliability", type ="checkbox", name="reliability" value=1>
-                    <label>신뢰성이 있어요</label></td>
-            </tr>
-            <tr>
-                <td><input id="solving", type ="checkbox", name="solving" value=1>
-                    <label>문제를 잘 해결해요</label></td>
-            </tr>
-            <tr>
-                <td><input id="communication", type ="checkbox", name="communication" value=1>
-                    <label>커뮤니케이션 능력이 뛰어나요</label></td>
-            </tr>
-            <tr>
-                <td><input id="attitude", type ="checkbox", name="attitude" value=1>
-                    <label>다른 의견을 존중하고 이해하려는 태도가 있어요</label></td>
-            </tr>
-        </table>
-        <input type="submit" value="제출하기">
-    </form>
+  <form action="/eva" method="POST">
+    <%- include('header') %>
+
+    <div class="recommendation-box">
+    <h2 class="subtitle" ><%= users[0].dataValues.username %>님과의 프로젝트 후기</h2>
+    <div class="rating">
+      <input type="radio" id="star5" name="ratings" value=5 /><label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+      <input type="radio" id="star4" name="ratings" value=4 /><label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+      <input type="radio" id="star3" name="ratings" value=3 /><label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+      <input type="radio" id="star2" name="ratings" value=2 /><label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+      <input type="radio" id="star1" name="ratings" value=1 /><label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+    </div>
+
+    <button type="submit" class="submit-btn">제출하기</button>
+  </div>
+    <!-- Uncomment the script if you want to submit the rating via JavaScript -->
+    <!--
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          const ratingElements = document.getElementsByName('ratings');
+          let selectedRating = null;
+
+          for (const element of ratingElements) {
+            if (element.checked) {
+              selectedRating = element.value;
+              break;
+            }
+          }
+
+          if (selectedRating !== null) {
+            // 여기에 서버로 전송하는 로직을 추가할 수 있습니다.
+            alert('평점이 제출되었습니다: ' + selectedRating);
+            // 여기에서 서버로 Ajax 요청을 보낼 수 있습니다.
+            // 예: fetch('/eva', { method: 'POST', body: JSON.stringify({ rating: selectedRating }) });
+          } else {
+            alert('평점을 선택하세요.');
+          }
+        });
+      });
+    </script>
+    -->
+  </form>
 </body>
 </html>
